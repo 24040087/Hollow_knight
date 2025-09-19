@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hollow Knight - Team Cherry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            color: #e8e8e8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Fondo animado con partículas */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(210, 144, 52, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.05) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="%23d29034" opacity="0.3"/><circle cx="80" cy="40" r="1.5" fill="%23ff8c00" opacity="0.2"/><circle cx="60" cy="80" r="0.5" fill="%23d29034" opacity="0.4"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 0;
+            background: linear-gradient(45deg, rgba(210, 144, 52, 0.1) 0%, transparent 70%);
+            border-bottom: 2px solid rgba(210, 144, 52, 0.3);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 600;
+            color: #f0f0f0;
+            text-shadow: 2px 2px 10px rgba(210, 144, 52, 0.5);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #d29034;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Sistema de pestañas navegables */
+        .tabs-container {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(210, 144, 52, 0.2);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tab {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .tab-link {
+            display: block;
+            width: 100%;
+            padding: 20px 30px;
+            background: transparent;
+            border: none;
+            color: #b0b0b0;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .tab-link:hover {
+            color: #d29034;
+            background: rgba(210, 144, 52, 0.05);
+        }
+
+        .tab-link.active {
+            color: #f0f0f0;
+            background: rgba(210, 144, 52, 0.1);
+            border-bottom-color: #d29034;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            padding: 80px 0;
+            min-height: 80vh;
+        }
+
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #f0f0f0;
+            text-shadow: 1px 1px 5px rgba(210, 144, 52, 0.3);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .text-content {
+            font-size: 1.1rem;
+            color: #d0d0d0;
+        }
+
+        .text-content p {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #d29034;
+            font-weight: 500;
+        }
+
+        /* Team Members */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .team-member {
+            background: linear-gradient(145deg, rgba(45, 45, 45, 0.8), rgba(30, 30, 30, 0.8));
+            border: 1px solid rgba(210, 144, 52, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(210, 144, 52, 0.1);
+            border-color: rgba(210, 144, 52, 0.4);
+        }
+
+        .member-image {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #3a3a3a, #2a2a2a);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(210, 144, 52, 0.3);
+            font-size: 2rem;
+            color: #d29034;
+        }
+
+        .member-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        .member-role {
+            color: #d29034;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #d29034, #ff8c00);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 40px 0;
+            background: rgba(45, 45, 45, 0.8);
+            border-radius: 10px;
+            padding: 25px;
+            width: 45%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(210, 144, 52, 0.2);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #d29034;
+            border-radius: 50%;
+            top: 30px;
+            z-index: 1;
+            border: 3px solid #1a1a1a;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -35px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -35px;
+        }
+
+        .timeline-year {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: #d29034;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .timeline-event {
+            color: #e8e8e8;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .timeline-description {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-top: 2px solid rgba(210, 144, 52, 0.3);
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #d29034;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #d29034;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-link {
+                padding: 15px 20px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .timeline-item {
+                width: 90%;
+                left: 5% !important;
+            }
+            
+            .timeline-item::before {
+                left: -35px !important;
+            }
+            
+            .timeline::before {
+                left: 10px;
+            }
+        }
+    </style>
+    <link rel="icon" href="imagenes/team_cherry.png" type="image/png">
+</head>
+<body>
+    <div class="bg-particles"></div>
+    
+    <header>
+        <div class="container">
+            <h1 class="logo">HOLLOW KNIGHT</h1>
+            <p class="subtitle">Un viaje épico por las profundidades de Hallownest</p>
+        </div>
+    </header>
+
+    <div class="tabs-container">
+        <div class="container">
+            <ul class="tabs">
+                <li class="tab">
+                    <a href="#" class="tab-link active">🏛️ Origen</a>
+                </li>
+                <li class="tab">
+                    <a href="hollow_knight.html" class="tab-link">⚔️ Hollow Knight</a>
+                </li>
+                <li class="tab">
+                    <a href="hollow_knight_silksong.html" class="tab-link">🕷️ Silksong</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <!-- CONTENIDO DE ORIGEN -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Los Creadores de Hallownest</h2>
+                <div class="content-grid">
+                    <div class="text-content">
+                        <p><span class="highlight">Team Cherry</span> es un estudio independiente australiano fundado por tres apasionados desarrolladores que transformaron su visión artística en una de las obras maestras más aclamadas del gaming independiente.</p>
+                        
+                        <p>Todo comenzó en la <span class="highlight">Universidad de Adelaide</span>, donde Ari Gibson y William Pellen se conocieron estudiando desarrollo de videojuegos. Su pasión compartida por crear experiencias únicas los llevó a formar Team Cherry en 2013.</p>
+                        
+                        <p>Con la incorporación posterior de <span class="highlight">Christopher Larkin</span> como compositor, el trío completó la fórmula perfecta que daría vida al atmosférico mundo de Hollow Knight.</p>
+                    </div>
+                    <div>
+                        <div style="background: linear-gradient(45deg, rgba(210, 144, 52, 0.1), transparent); border: 2px solid rgba(210, 144, 52, 0.3); border-radius: 15px; padding: 40px; text-align: center;">
+                            <h3 style="font-family: 'Cinzel', serif; color: #d29034; margin-bottom: 20px; font-size: 1.5rem;">Filosofía del Estudio</h3>
+                            <p style="color: #e8e8e8; margin-bottom: 15px;">"Crear experiencias profundas y memorables"</p>
+                            <p style="color: #b0b0b0; font-size: 0.9rem;">Team Cherry se enfoca en la calidad sobre la cantidad, dedicando años a perfeccionar cada detalle de sus creaciones.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img class="member-image" src="imagenes/desarrolladores/Ari_Gibson.jpg" alt="Ari Gibson">
+                        <h3 class="member-name">Ari Gibson</h3>
+                        <p class="member-role">Arte y Animación</p>
+                        <p>El visionario artístico detrás del distintivo estilo visual de Hollow Knight. Cada trazo de su arte dibujado a mano contribuye a la atmósfera única de Hallownest. Su experiencia previa en animación tradicional se refleja en cada movimiento fluido del juego.</p>
+                    </div>
+                    <div class="team-member">
+                        <img class="member-image" src="imagenes/desarrolladores/william-pellen.jpg" alt="William Pellen">
+                        <h3 class="member-name">William Pellen</h3>
+                        <p class="member-role">Programación y Diseño</p>
+                        <p>El arquitecto técnico que hace realidad las visiones creativas. Su experiencia en programación Unity y diseño de gameplay han sido fundamentales para crear la experiencia fluida y desafiante que caracteriza a Hollow Knight.</p>
+                    </div>
+                    <div class="team-member">
+                        <img class="member-image" src="imagenes/desarrolladores/Christopher_Larkin.jpg" alt="Christopher Larkin">
+                        <h3 class="member-name">Christopher Larkin</h3>
+                        <p class="member-role">Música y Audio</p>
+                        <p>El maestro compositor cuya música orquestal da alma a Hallownest. Sus composiciones melancólicas y épicas han sido fundamentales para crear la experiencia emocional profunda que define la serie Hollow Knight.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Historia del Desarrollo</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2013</div>
+                        <div class="timeline-event">Formación de Team Cherry</div>
+                        <div class="timeline-description">Ari Gibson y William Pellen se unen oficialmente como Team Cherry después de colaborar en varios proyectos durante sus estudios universitarios.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2014</div>
+                        <div class="timeline-event">Conceptualización de Hollow Knight</div>
+                        <div class="timeline-description">Los primeros bocetos y conceptos de Hallownest cobran vida. El mundo subterráneo y sus habitantes místicos comienzan a tomar forma en la mente creativa del equipo.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-event">Campaña de Kickstarter Exitosa</div>
+                        <div class="timeline-description">La campaña de crowdfunding supera todas las expectativas, recaudando $57,138 AUD de su meta inicial de $35,000, demostrando el interés de la comunidad en el proyecto.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2016</div>
+                        <div class="timeline-event">Desarrollo Intensivo</div>
+                        <div class="timeline-description">Team Cherry se sumerge completamente en el desarrollo, refinando mecánicas, puliendo arte y expandiendo el mundo mucho más allá de lo originalmente planeado.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2017</div>
+                        <div class="timeline-event">Lanzamiento Triunfal</div>
+                        <div class="timeline-description">Hollow Knight se lanza en PC el 24 de febrero, recibiendo críticas universalmente positivas y estableciendo a Team Cherry como un estudio indie de clase mundial.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2018-2019</div>
+                        <div class="timeline-event">Expansión Global</div>
+                        <div class="timeline-description">El juego llega a Nintendo Switch, PlayStation 4 y Xbox One, acompañado de cuatro DLCs gratuitos que expanden significativamente la experiencia original.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2019-Presente</div>
+                        <div class="timeline-event">Era de Silksong</div>
+                        <div class="timeline-description">Team Cherry anuncia Hollow Knight: Silksong y continúa trabajando en esta ambiciosa secuela que promete expandir el universo de Hallownest de formas inimaginables.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Team Cherry</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Blog Oficial</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Juegos</h3>
+                    <ul class="footer-links">
+                        <li><a href="hollow_knight.html">Hollow Knight</a></li>
+                        <li><a href="hollow_knight_silksong.html">Hollow Knight: Silksong</a></li>
+                        <li><a href="#">DLCs Gratuitos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Comunidad</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Reddit</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Comprar</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Steam</a></li>
+                        <li><a href="#">Nintendo eShop</a></li>
+                        <li><a href="#">PlayStation Store</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Team Cherry. Todos los derechos reservados. Hollow Knight y todos los personajes relacionados son marcas comerciales de Team Cherry.</p>
+                <p>Hecho con ❤️ para la comunidad de Hollow Knight</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hollow Knight: Silksong - Reino de Pharloom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-particles"></div>
+    
+    <!-- Inputs para navegación -->
+    <input type="radio" name="navigation" id="nav-main" checked>
+    <input type="radio" name="navigation" id="nav-hornet">
+    <input type="radio" name="navigation" id="nav-pharloom">
+    <input type="radio" name="navigation" id="nav-personajes">
+    <input type="radio" name="navigation" id="nav-teorias">
+    
+    <!-- Pantalla principal -->
+    <div class="main-screen">
+        <header class="silksong-header">
+            <div class="container">
+                <h1 class="main-title">SILKSONG</h1>
+                <p class="subtitle">El Reino de Pharloom Aguarda</p>
+                <p class="mystery-text">
+                    "En las tierras altas donde las agujas de seda danzan al viento, 
+                    una princesa guerrera emprende una travesía hacia un destino incierto..."
+                </p>
+            </div>
+        </header>
+
+        <div class="container">
+            <nav class="mystery-navigation">
+                <h2 class="mystery-title">Los Senderos del Misterio</h2>
+                
+                <div class="compass-grid">
+                    <label for="nav-hornet" class="compass-item hornet">
+                        <span class="compass-icon">🕷️</span>
+                        <h3 class="compass-title">Hornet, la Princesa</h3>
+                        <p class="compass-desc">Descubrid todo lo que sabemos sobre la nueva protagonista y su misteriosa misión</p>
+                    </label>
+                    
+                    <label for="nav-pharloom" class="compass-item pharloom">
+                        <span class="compass-icon">🏔️</span>
+                        <h3 class="compass-title">Reino de Pharloom</h3>
+                        <p class="compass-desc">Explorad las tierras altas y los dominios del nuevo mundo</p>
+                    </label>
+                    
+                    <label for="nav-personajes" class="compass-item personajes">
+                        <span class="compass-icon">👥</span>
+                        <h3 class="compass-title">Nuevos Habitantes</h3>
+                        <p class="compass-desc">Conoced a los misteriosos personajes que pueblan este reino</p>
+                    </label>
+                    
+                    <label for="nav-teorias" class="compass-item teorias">
+                        <span class="compass-icon">🔮</span>
+                        <h3 class="compass-title">Teorías y Especulaciones</h3>
+                        <p class="compass-desc">Sumergíos en las teorías de la comunidad</p>
+                    </label>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Sección Hornet -->
+    <div class="section-content section-hornet">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">La Princesa del Hilo y la Aguja</h2>
+                <p class="section-subtitle">
+                    De protectora de Hallownest a protagonista de su propia aventura.
+                </p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-icon" style="color: #e74c3c;">🎯</div>
+                    <h3 class="card-title">La Misión de Hornet</h3>
+                    <p class="card-description">
+                        Capturada y llevada a Pharloom contra su voluntad, Hornet debe encontrar 
+                        el camino de regreso a casa. Su misión se complica cuando descubre 
+                        secretos que podrían afectar ambos mundos.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Estado:</span>
+                            <span class="stat-value">Cautiva Escapada</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Objetivo:</span>
+                            <span class="stat-value">Regresar a Hallownest</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-icon" style="color: #c0392b;">⚡</div>
+                    <h3 class="card-title">Nuevas Habilidades</h3>
+                    <p class="card-description">
+                        En Pharloom, Hornet desarrolla técnicas más avanzadas. Su aguja 
+                        e hilo se vuelven más versátiles, permitiendo trampas de seda 
+                        y combos devastadores.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Arma:</span>
+                            <span class="stat-value">Aguja Mejorada</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Técnica:</span>
+                            <span class="stat-value">Trampas de Seda</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Pharloom -->
+    <div class="section-content section-pharloom">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Las Tierras Altas de Pharloom</h2>
+                <p class="section-subtitle">
+                    Un reino vertical que se alza hacia los cielos, donde seda y metal se entrelazan.
+                </p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-icon" style="color: #ff8c00;">🏗️</div>
+                    <h3 class="card-title">Arquitectura Vertical</h3>
+                    <p class="card-description">
+                        Pharloom se caracteriza por estructuras que se elevan hacia las alturas, 
+                        conectadas por puentes de seda y metal. Un mundo de múltiples niveles.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Estilo:</span>
+                            <span class="stat-value">Torres y Puentes</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Material:</span>
+                            <span class="stat-value">Seda y Metal</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-icon" style="color: #e67e22;">🌅</div>
+                    <h3 class="card-title">Paisajes Luminosos</h3>
+                    <p class="card-description">
+                        A diferencia de Hallownest, Pharloom se baña en luz natural. 
+                        Sus cielos abiertos crean sensación de libertad y expansión.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Iluminación:</span>
+                            <span class="stat-value">Natural y Artificial</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Contraste:</span>
+                            <span class="stat-value">Opuesto a Hallownest</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Personajes -->
+    <div class="section-content section-personajes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Los Habitantes del Reino Alto</h2>
+                <p class="section-subtitle">
+                    Nuevas criaturas, aliados misteriosos y enemigos formidables pueblan Pharloom.
+                </p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <img src="imagenes/personajes/Boss_lace.jpg" alt="Lace" class="card-image" width="400" height="400">
+                    <h3 class="card-title">Lace</h3>
+                    <p class="card-description">
+                        Una guerrera misteriosa que parece conocer a Hornet. Armada con técnicas 
+                        únicas, podría ser aliada o rival. Su conexión permanece envuelta en misterio.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Relación:</span>
+                            <span class="stat-value">Misteriosa con Hornet</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Naturaleza:</span>
+                            <span class="stat-value">Aliada/Rival</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/personajes/tejedora.jpg" alt="Tejedores Maestros" class="card-image" width="300" height="400">
+                    <h3 class="card-title">Los Tejedores Maestros</h3>
+                    <p class="card-description">
+                        Criaturas arácnidas inteligentes que dominan el arte de la seda. 
+                        Construyen las estructuras de Pharloom y siguen un propósito superior.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Especialidad:</span>
+                            <span class="stat-value">Arquitectura de Seda</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Inteligencia:</span>
+                            <span class="stat-value">Superior</span>
+                        </div>
+                    </div>
+                </div>
+                    <div class="content-card">
+                    <img src="imagenes/personajes/gran_madre_seda.jpg" alt="Gran Madre Seda" class="card-image" width="400" height="200">
+                    <h3 class="card-title">Gran Madre Seda</h3>
+                    <p class="card-description">
+                        Ella es una entidad que ejerce un gran control sobre el reino de Pharloom a través de la seda y la música. 
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Especialidad:</span>
+                            <span class="stat-value">Control a través de la Seda y la Canción</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Inteligencia:</span>
+                            <span class="stat-value">Antagonista/Figura materna</span>
+                        </div>
+                    </div>
+                </div>
+                    <div class="content-card">
+                    <img src="imagenes/personajes/Npc_shakra.jpg" alt="Shakra" class="card-image" width="400" height="400">
+                    <h3 class="card-title">Shakra</h3>
+                    <p class="card-description">
+                        Shakra es una hábil cartógrafa y guerrera, proveniente del clan de los tejedoras. A diferencia de otros miembros de su especie, su naturaleza es más pragmática y su principal objetivo es registrar y entender el mundo que la rodea.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Especialidad:</span>
+                            <span class="stat-value">Cartografía y Combate</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Inteligencia:</span>
+                            <span class="stat-value">Aliada/Vendedora</span>
+                        </div>
+                    </div>
+                </div>
+                    <div class="content-card">
+                    <img src="imagenes/personajes/Npc_sherma.jpg" alt="Sherma" class="card-image" width="400" height="400">
+                    <h3 class="card-title">Sherma</h3>
+                    <p class="card-description">
+                        Ella es una entidad que ejerce un gran control sobre el reino de Pharloom a través de la seda y la música. 
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Especialidad:</span>
+                            <span class="stat-value">Peregrinaje y Canto</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Inteligencia:</span>
+                            <span class="stat-value">Aliado/Personaje recurrente</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Teorías -->
+    <div class="section-content section-teorias">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">El Tapiz de las Especulaciones</h2>
+                <p class="section-subtitle">
+                    La comunidad teje teorías intrincadas sobre los misterios sin resolver.
+                </p>
+            </div>
+            
+            <div class="theory-card">
+                <h3 class="theory-title">La Conexión de los Tejedores</h3>
+                <p class="theory-content">
+                    Muchos fans especulan que Pharloom podría ser el hogar ancestral de los tejedores 
+                    de Hallownest, explicando la conexión de Herrah con este reino.
+                </p>
+                <p class="theory-author">— Propuesta por la comunidad de r/HollowKnight</p>
+            </div>
+            
+            <div class="theory-card">
+                <h3 class="theory-title">Lace como Hermana Perdida</h3>
+                <p class="theory-content">
+                    Una teoría propone que Lace podría ser otra hija del Rey Pálido, 
+                    explicando sus habilidades similares y la tensión con Hornet.
+                </p>
+                <p class="theory-author">— Teoría viral de Twitter</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón de regreso -->
+    <label for="nav-main" class="back-button" title="Volver al mapa">🗺️</label>
+
+</body>
+</html>

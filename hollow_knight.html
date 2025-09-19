@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hollow Knight - El Mundo de Hallownest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e8e8e8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Fondo animado específico de Hallownest */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 30%, rgba(52, 152, 219, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 70%, rgba(39, 174, 96, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 50% 20%, rgba(231, 76, 60, 0.05) 0%, transparent 30%);
+            animation: mysticalFloat 25s ease-in-out infinite;
+        }
+
+        @keyframes mysticalFloat {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
+            33% { transform: translateY(-15px) scale(1.02); opacity: 0.9; }
+            66% { transform: translateY(-8px) scale(0.98); opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sistema de navegación solo CSS */
+        .navigation-input {
+            display: none;
+        }
+
+        /* Header específico de Hollow Knight */
+        .hollow-knight-header {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, transparent 40%, rgba(39, 174, 96, 0.08) 100%);
+            border-bottom: 3px solid rgba(210, 144, 52, 0.4);
+        }
+
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 4.5rem;
+            font-weight: 600;
+            color: #f0f0f0;
+            text-shadow: 3px 3px 15px rgba(52, 152, 219, 0.6);
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #3498db;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Navegación tipo mapa/brújula */
+        .map-navigation {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 80px auto;
+            text-align: center;
+            border: 2px solid rgba(210, 144, 52, 0.3);
+        }
+
+        .map-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #d29034;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 8px rgba(210, 144, 52, 0.5);
+        }
+
+        .compass-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .compass-item {
+            position: relative;
+            background: linear-gradient(145deg, rgba(45, 45, 45, 0.8), rgba(30, 30, 30, 0.9));
+            border-radius: 15px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+
+        /* Colores específicos por área */
+        .compass-item.personajes {
+            border-color: rgba(52, 152, 219, 0.3);
+            background: linear-gradient(145deg, rgba(52, 152, 219, 0.1), rgba(30, 30, 50, 0.9));
+        }
+
+        .compass-item.reinos {
+            border-color: rgba(39, 174, 96, 0.3);
+            background: linear-gradient(145deg, rgba(39, 174, 96, 0.1), rgba(30, 50, 30, 0.9));
+        }
+
+        .compass-item.infeccion {
+            border-color: rgba(231, 76, 60, 0.3);
+            background: linear-gradient(145deg, rgba(231, 76, 60, 0.1), rgba(50, 30, 30, 0.9));
+        }
+
+        .compass-item.galeria {
+            border-color: rgba(155, 89, 182, 0.3);
+            background: linear-gradient(145deg, rgba(155, 89, 182, 0.1), rgba(50, 30, 50, 0.9));
+        }
+
+        .compass-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(210, 144, 52, 0.2);
+        }
+
+        .compass-item.personajes:hover { border-color: rgba(52, 152, 219, 0.6); }
+        .compass-item.reinos:hover { border-color: rgba(39, 174, 96, 0.6); }
+        .compass-item.infeccion:hover { border-color: rgba(231, 76, 60, 0.6); }
+        .compass-item.galeria:hover { border-color: rgba(155, 89, 182, 0.6); }
+
+        .compass-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .compass-item.personajes .compass-icon { color: #3498db; }
+        .compass-item.reinos .compass-icon { color: #27ae60; }
+        .compass-item.infeccion .compass-icon { color: #e74c3c; }
+        .compass-item.galeria .compass-icon { color: #9b59b6; }
+
+        .compass-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #f0f0f0;
+        }
+
+        .compass-desc {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .compass-item:hover .compass-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Control de visibilidad con CSS puro */
+        .main-screen {
+            display: block;
+        }
+
+        .lore-section {
+            display: none;
+            padding: 80px 0;
+            min-height: 90vh;
+        }
+
+        /* Mostrar secciones basado en checkboxes */
+        #show-personajes:checked ~ .main-screen {
+            display: none;
+        }
+
+        #show-personajes:checked ~ #personajes {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        #show-reinos:checked ~ .main-screen {
+            display: none;
+        }
+
+        #show-reinos:checked ~ #reinos {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        #show-infeccion:checked ~ .main-screen {
+            display: none;
+        }
+
+        #show-infeccion:checked ~ #infeccion {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        #show-galeria:checked ~ .main-screen {
+            display: none;
+        }
+
+        #show-galeria:checked ~ #galeria {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Colores de títulos por sección */
+        .personajes .section-title { color: #3498db; }
+        .reinos .section-title { color: #27ae60; }
+        .infeccion .section-title { color: #e74c3c; }
+        .galeria .section-title { color: #9b59b6; }
+
+        /* Grid de personajes/reinos */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .content-card {
+            background: linear-gradient(145deg, rgba(45, 45, 45, 0.8), rgba(30, 30, 30, 0.9));
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, rgba(210, 144, 52, 0.5), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .content-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Bordes específicos por sección */
+        .personajes .content-card:hover { border-color: rgba(52, 152, 219, 0.5); }
+        .reinos .content-card:hover { border-color: rgba(39, 174, 96, 0.5); }
+        .infeccion .content-card:hover { border-color: rgba(231, 76, 60, 0.5); }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #f0f0f0;
+        }
+
+        .card-description {
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .card-details {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .card-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .stat-label {
+            color: #95a5a6;
+        }
+
+        .stat-value {
+            color: #d29034;
+            font-weight: 500;
+        }
+
+        /* Galería de arte */
+        .art-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .art-piece {
+            background: linear-gradient(145deg, rgba(45, 45, 45, 0.8), rgba(30, 30, 30, 0.9));
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .art-piece:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px rgba(155, 89, 182, 0.2);
+        }
+
+        .art-image {
+            height: 200px;
+            background: linear-gradient(45deg, #9b59b6, #8e44ad, #663399);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .art-info {
+            padding: 20px;
+        }
+
+        .art-title {
+            font-family: 'Cinzel', serif;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        .art-description {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Botón de regreso */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(210, 144, 52, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button:hover {
+            background: rgba(210, 144, 52, 1);
+            transform: scale(1.1);
+        }
+
+        /* Ocultar botón de regreso en pantalla principal */
+        .main-screen ~ .back-button {
+            display: none;
+        }
+
+        #show-personajes:checked ~ .back-button,
+        #show-reinos:checked ~ .back-button,
+        #show-infeccion:checked ~ .back-button,
+        #show-galeria:checked ~ .back-button {
+            display: flex;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .compass-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+    <link rel="icon" href="imagenes/extras/hollowicon.png" type="image/png">
+</head>
+<body>
+    <div class="bg-particles"></div>
+    
+    <!-- Inputs para controlar navegación -->
+    <input type="radio" name="section" id="show-main" class="navigation-input" checked>
+    <input type="radio" name="section" id="show-personajes" class="navigation-input">
+    <input type="radio" name="section" id="show-reinos" class="navigation-input">
+    <input type="radio" name="section" id="show-infeccion" class="navigation-input">
+    <input type="radio" name="section" id="show-galeria" class="navigation-input">
+    
+    <!-- Pantalla principal de navegación -->
+    <div class="main-screen">
+        <header class="hollow-knight-header">
+            <div class="container">
+                <h1 class="main-title">HALLOWNEST</h1>
+                <p class="subtitle">Reino de Sombras y Secretos</p>
+                <p class="description">
+                    Adentraos en las profundidades del reino caído, donde cada rincón guarda una historia, 
+                    cada sombra oculta un misterio, y cada paso os acerca más a la verdad sobre la Infección 
+                    que una vez destruyó esta majestuosa civilización subterránea.
+                </p>
+            </div>
+        </header>
+
+        <div class="container">
+            <nav class="map-navigation">
+                <h2 class="map-title">Brújula de Hallownest</h2>
+                <p style="color: #95a5a6; margin-bottom: 30px;">
+                    Elegid vuestro destino y descended a las profundidades del conocimiento
+                </p>
+                
+                <div class="compass-grid">
+                    <label for="show-personajes" class="compass-item personajes">
+                        <span class="compass-icon">👑</span>
+                        <h3 class="compass-title">Personajes Principales</h3>
+                        <p class="compass-desc">Conoced a los héroes, villanos y criaturas místicas que dieron forma al destino de Hallownest</p>
+                    </label>
+                    
+                    <label for="show-reinos" class="compass-item reinos">
+                        <span class="compass-icon">🏰</span>
+                        <h3 class="compass-title">Reinos de Hallownest</h3>
+                        <p class="compass-desc">Explorad las vastas regiones del reino subterráneo, cada una con su propia historia y secretos</p>
+                    </label>
+                    
+                    <label for="show-infeccion" class="compass-item infeccion">
+                        <span class="compass-icon">🔥</span>
+                        <h3 class="compass-title">La Infección y la Luz</h3>
+                        <p class="compass-desc">Descended al corazón de la tragedia que consumió Hallownest y cambió su destino para siempre</p>
+                    </label>
+                    
+                    <label for="show-galeria" class="compass-item galeria">
+                        <span class="compass-icon">🎨</span>
+                        <h3 class="compass-title">Galería de Arte</h3>
+                        <p class="compass-desc">Contemplad las majestuosas vistas y personajes que hacen de Hallownest un mundo inolvidable</p>
+                    </label>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Sección Personajes -->
+    <div id="personajes" class="lore-section personajes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Los Guardianes de la Historia</h2>
+                <p class="section-subtitle">
+                    Desde el misterioso Caballero hasta el poderoso Rey Pálido, cada personaje 
+                    ha tejido los hilos del destino de Hallownest con sus acciones y sacrificios.
+                </p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <img src="imagenes/personajes/The_Knight.jpg" alt="El Caballero" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">El Caballero</h3>
+                    <p class="card-description">
+                        Un Recipiente silencioso que regresa a Hallownest. Sin memoria de su pasado, 
+                        este pequeño guerrero porta la carga de salvar el reino de la Infección.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Naturaleza:</span>
+                            <span class="stat-value">Recipiente del Vacío</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Arma:</span>
+                            <span class="stat-value">Uña Vieja</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Misión:</span>
+                            <span class="stat-value">Detener la Infección</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/personajes/Hornet_Idle.jpg" alt="Hornet" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">Hornet</h3>
+                    <p class="card-description">
+                        La Princesa-protectora de Hallownest, hija de Herrah la Bestia y el Rey Pálido. 
+                        Feroz guerrera que pone a prueba a quienes buscan adentrarse en los secretos del reino.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Título:</span>
+                            <span class="stat-value">Princesa-Protectora</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Arma:</span>
+                            <span class="stat-value">Aguja e Hilo</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Linaje:</span>
+                            <span class="stat-value">Medio Insecto-Araña</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/personajes/Pale-King.jpg" alt="El Rey Pálido" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">El Rey Pálido</h3>
+                    <p class="card-description">
+                        El antiguo monarca de Hallownest que trajo consciencia y civilización a los insectos. 
+                        Su reino próspero se construyó sobre las ruinas del dominio de la Diosa Radiante.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Poder:</span>
+                            <span class="stat-value">Otorgar Mente y Alma</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Reino:</span>
+                            <span class="stat-value">Todo Hallownest</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Legado:</span>
+                            <span class="stat-value">Los Recipientes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/personajes/B_Grimm.jpg" alt="Grimm" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">Grimm</h3>
+                    <p class="card-description">
+                        Maestro de la Tropa Grimm, una misteriosa compañía ambulante de artistas circenses. Sigue el "Ritual de la Pesadilla" para recolectar las Llamas Escarlata de los reinos en ruinas y así alimentar al Corazón de la Pesadilla, manteniendo vivo su eterno ciclo.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Naturaleza:</span>
+                            <span class="stat-value">Ser Superior, Pesadilla</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Residencia:</span>
+                            <span class="stat-value">El Reino de las Pesadillas</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Rol:</span>
+                            <span class="stat-value">Portador del Corazón de la Pesadilla</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/personajes/B_Radiance.jpg" alt="La Diosa Radiante" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">La Diosa Radiante</h3>
+                    <p class="card-description">
+                        La antigua deidad de luz de Hallownest, olvidada pero nunca destruida. Su ira por ser 
+                        relegada al olvido se manifestó como la Infección que devastó el reino.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Elemento:</span>
+                            <span class="stat-value">Luz Radiante</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Poder:</span>
+                            <span class="stat-value">Control de Sueños</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Manifestación:</span>
+                            <span class="stat-value">La Infección</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/personajes/B_Hollow_Knight.jpg" alt="El Hollow Knight" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">El Hollow Knight</h3>
+                    <p class="card-description">
+                        El Recipiente elegido, considerado puro y vacío, fue sellado con la Infección en el 
+                        Templo del Huevo Negro. Sin embargo, su pureza no era perfecta, y el sello se debilitó.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Propósito:</span>
+                            <span class="stat-value">Contener la Infección</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Estado:</span>
+                            <span class="stat-value">Sellado/Liberado</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Falla:</span>
+                            <span class="stat-value">Una Idea Instilada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Reinos -->
+    <div id="reinos" class="lore-section reinos">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Los Dominios Perdidos</h2>
+                <p class="section-subtitle">
+                    Cada región de Hallownest cuenta una historia diferente, desde las elegantes 
+                    alturas de la Ciudad de Lágrimas hasta las profundidades ardientes del Nido Profundo.
+                </p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <img src="imagenes/mapa/ciudad_de_lagrimas.jpg" alt="Ciudad de Lágrimas" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">Ciudad de Lágrimas</h3>
+                    <p class="card-description">
+                        La majestuosa capital de Hallownest, una metrópolis vertical que se alza en una 
+                        caverna colosal. Sus torres se elevan hacia las alturas, conectadas por elegantes puentes, 
+                        ahora bañada por una lluvia eterna de tristeza.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Característica:</span>
+                            <span class="stat-value">Lluvia Eterna</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Arquitectura:</span>
+                            <span class="stat-value">Torres Verticales</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Estado:</span>
+                            <span class="stat-value">Abandonada pero Preservada</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/mapa/jardines_de_la_reina.jpg" alt="Jardines de la reina" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">Jardines de la Reina</h3>
+                    <p class="card-description">
+                        Un oasis de verdor en las profundidades rocosas, donde la Dama Blanca se exilió. 
+                        Los jardines rebosan de vida vegetal y criaturas pacíficas, un contraste marcado 
+                        con la desolación del resto del reino.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Habitante:</span>
+                            <span class="stat-value">La Dama Blanca</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Atmósfera:</span>
+                            <span class="stat-value">Serenidad y Vida</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Flora:</span>
+                            <span class="stat-value">Plantas Místicas</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/mapa/nido_profundo.jpg" alt="Nido profundo" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">Nido Profundo</h3>
+                    <p class="card-description">
+                        Las profundidades ardientes de Hallownest, hogar de criaturas de fuego y magma. 
+                        Este reino subterráneo hierve con calor primordial, donde las llamas nunca se extinguen 
+                        y los secretos más antiguos yacen enterrados.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Elemento:</span>
+                            <span class="stat-value">Fuego y Magma</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Peligros:</span>
+                            <span class="stat-value">Calor Extremo</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Criaturas:</span>
+                            <span class="stat-value">Seres de Llama</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/mapa/palacio_blanco.png" alt="Palacio blanco" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">Palacio Blanco</h3>
+                    <p class="card-description">
+                        La residencia real del Rey Pálido, un palacio de mármol blanco que se alza 
+                        majestuosamente sobre el reino. Sus salones guardan los secretos más profundos 
+                        de la realeza y el nacimiento de los Recipientes.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Habitante:</span>
+                            <span class="stat-value">El Rey Pálido</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Material:</span>
+                            <span class="stat-value">Mármol Pálido</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Secretos:</span>
+                            <span class="stat-value">Origen de los Recipientes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/mapa/cuenca_antigua.jpg" alt="Cuenca antigua" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">Cuenca Antigua</h3>
+                    <p class="card-description">
+                        Las profundidades más oscuras de Hallownest, donde el Vacío primordial se concentra. 
+                        Aquí yacen los restos de miles de Recipientes fallidos, en un mar de oscuridad absoluta 
+                        que guarda los secretos más profundos del reino.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Elemento:</span>
+                            <span class="stat-value">Vacío Primordial</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Contenido:</span>
+                            <span class="stat-value">Recipientes Fallidos</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Naturaleza:</span>
+                            <span class="stat-value">Oscuridad Absoluta</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Infección -->
+    <div id="infeccion" class="lore-section infeccion">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">El Corazón de la Tragedia</h2>
+                <p class="section-subtitle">
+                    La Infección representa el conflicto central de Hallownest: la lucha entre la luz olvidada 
+                    y la oscuridad que la reemplazó, entre el pasado y el presente, entre la memoria y el olvido.
+                </p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <img src="imagenes/personajes/cascara_infectada.jpg" alt="infección" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">La Infección Radiante</h3>
+                    <p class="card-description">
+                        Una plaga de luz naranja que corrompe las mentes y cuerpos de los insectos de Hallownest. 
+                        No es una enfermedad común, sino la manifestación de la ira de una diosa olvidada que 
+                        busca recuperar a sus adoradores perdidos.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Origen:</span>
+                            <span class="stat-value">Diosa Radiante</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Efecto:</span>
+                            <span class="stat-value">Corrupción Mental</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Color:</span>
+                            <span class="stat-value">Naranja Brillante</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/extras/Absolute_Radiance_Icon.jpg" alt="Destello" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">La Luz Olvidada</h3>
+                    <p class="card-description">
+                        Antes del Rey Pálido, la Diosa Radiante era adorada como la deidad de la luz. 
+                        Su poder iluminaba Hallownest y daba propósito a sus habitantes. Pero cuando 
+                        fue olvidada, su luz se convirtió en una fuerza destructiva.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Era:</span>
+                            <span class="stat-value">Anterior al Rey Pálido</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Adoradores:</span>
+                            <span class="stat-value">Tribu de las Polillas</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Destino:</span>
+                            <span class="stat-value">Olvidada y Furiosa</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/personajes/sombre.jpg" alt="vacio" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">El Vacío como Antídoto</h3>
+                    <p class="card-description">
+                        El Vacío representa la antítesis perfecta de la luz radiante. Es la oscuridad 
+                        primordial, sin pensamiento ni deseo, capaz de contener y neutralizar la Infección. 
+                        Los Recipientes, hechos de Vacío, fueron la respuesta del Reino.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Naturaleza:</span>
+                            <span class="stat-value">Oscuridad Pura</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Propiedad:</span>
+                            <span class="stat-value">Sin Mente ni Voluntad</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Función:</span>
+                            <span class="stat-value">Contener la Infección</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/extras/contencion_de_RADIANCE.jpg" alt="vasija" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">El Gran Sacrificio</h3>
+                    <p class="card-description">
+                        Para detener la Infección, el Rey Pálido creó los Recipientes - sus propios hijos - 
+                        como recipientes vivientes. Miles fueron desechados hasta encontrar uno "perfecto". 
+                        Este fue sellado con la Infección en el Templo del Huevo Negro.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Costo:</span>
+                            <span class="stat-value">Miles de Hijos</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Resultado:</span>
+                            <span class="stat-value">El Hollow Knight</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Duración:</span>
+                            <span class="stat-value">Temporal</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/extras/soñadores.jpg" alt="soñadores" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">Los Guardianes de Sueños</h3>
+                    <p class="card-description">
+                        Monomon la Maestra, Lurien el Vigilante y Herrah la Bestia se convirtieron en 
+                        Soñadores eternos para sellar el Templo. Sus sacrificios mantuvieron la prisión 
+                        del Hollow Knight, pero también sellaron su propio destino.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Soñadores:</span>
+                            <span class="stat-value">3 Guardianes</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Propósito:</span>
+                            <span class="stat-value">Sellar el Templo</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Estado:</span>
+                            <span class="stat-value">Sueño Eterno</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <img src="imagenes/personajes/vasija_rota.jpg" alt="perfección fallida" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <h3 class="card-title">El Fallo del Plan</h3>
+                    <p class="card-description">
+                        El Hollow Knight no era tan vacío como se creía. Una idea se había instilado en él: 
+                        el amor por su padre. Esta impureza permitió que la Infección creciera dentro de él, 
+                        debilitando gradualmente el sello hasta que ya no pudo contenerla.
+                    </p>
+                    <div class="card-details">
+                        <div class="card-stat">
+                            <span class="stat-label">Falla:</span>
+                            <span class="stat-value">Una Idea Instilada</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Consecuencia:</span>
+                            <span class="stat-value">Sello Debilitado</span>
+                        </div>
+                        <div class="card-stat">
+                            <span class="stat-label">Resultado:</span>
+                            <span class="stat-value">Retorno de la Infección</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Galería -->
+    <div id="galeria" class="lore-section galeria">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Galería del Reino Perdido</h2>
+                <p class="section-subtitle">
+                    Contemplad la belleza melancólica de Hallownest a través de las obras que capturan 
+                    la esencia de este reino subterráneo y sus inolvidables habitantes.
+                </p>
+            </div>
+            
+            <div class="art-gallery">
+                <div class="art-piece">
+                    <img src="imagenes/mapa/ciudad_de_lagrimas.jpg" alt="Ciudad de Lágrimas" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <div class="art-info">
+                        <h3 class="art-title">Ciudad de Lágrimas</h3>
+                        <p class="art-description">
+                            La capital en ruinas se alza majestuosa bajo una lluvia eterna. Sus torres 
+                            góticas y puentes de piedra cuentan la historia de una civilización que 
+                            una vez brilló con gloria, ahora sumida en melancolía perpetua.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="art-piece">
+                    <img src="imagenes/extras/caballero2.jpg" alt="El caballero" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <div class="art-info">
+                        <h3 class="art-title">El Caballero en las Profundidades</h3>
+                        <p class="art-description">
+                            Un pequeño guerrero desciende por los túneles oscuros de Hallownest, 
+                            su silueta apenas visible contra las sombras. Su viaje solitario 
+                            representa la esperanza en un mundo consumido por la desesperación.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="art-piece">
+                    <img src="imagenes/extras/hornet2.jpg" alt="Hornet" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <div class="art-info">
+                        <h3 class="art-title">Hornet, la Protectora</h3>
+                        <p class="art-description">
+                            La princesa guerrera se alza desafiante, su aguja brillando con 
+                            determinación. Su manto rojo ondea al viento mientras protege los 
+                            secretos de su reino con fiereza y honor.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="art-piece">
+                    <img src="imagenes/mapa/jardines_de_la_reina.jpg" alt="Jardines de la reina" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <div class="art-info">
+                        <h3 class="art-title">Jardines de la Reina</h3>
+                        <p class="art-description">
+                            Un oasis de verdor y vida en las profundidades rocosas. Plantas 
+                            místicas crecen en abundancia mientras la Dama Blanca medita en 
+                            soledad, rodeada de la belleza que una vez compartió con su reino.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="art-piece">
+                    <img src="imagenes/personajes/destello2.jpg" alt="Destello" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <div class="art-info">
+                        <h3 class="art-title">La Diosa Radiante</h3>
+                        <p class="art-description">
+                            Una figura de luz dorada se alza imponente, irradiando poder y furia 
+                            ancestral. Su forma etérea contrasta con la oscuridad que la rodea, 
+                            representando tanto la belleza como la destructiva naturaleza de la luz olvidada.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="art-piece">
+                    <img src="imagenes/mapa/vacio.jpg" alt="vacio" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <div class="art-info">
+                        <h3 class="art-title">El Vacío Primordial</h3>
+                        <p class="art-description">
+                            Las profundidades más oscuras de Hallownest revelan un mar de Vacío 
+                            puro. En esta oscuridad absoluta yacen los restos de miles de 
+                            Recipientes, testigos silenciosos del gran sacrificio realizado.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="art-piece">
+                    <img src="imagenes/mapa/Templo_del_huevo_negro.jpg" alt="Templo del huevo negro" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <div class="art-info">
+                        <h3 class="art-title">El Templo del Huevo Negro</h3>
+                        <p class="art-description">
+                            Una estructura masiva y ominosa se alza en las profundidades, 
+                            sellada por cadenas de poder ancestral. Dentro de sus muros 
+                            yace prisionero el Hollow Knight, cargando con el peso de todo un reino.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="art-piece">
+                    <img src="imagenes/mapa/lago azul.jpg" alt="El lago azul" style="width:100%; border-radius: 15px; margin-bottom: 20px;">
+                    <div class="art-info">
+                        <h3 class="art-title">El Lago Azul</h3>
+                        <p class="art-description">
+                            Una vasta extensión de agua tranquila y serena, ubicada directamente sobre la Ciudad de Lágrimas. Su superficie refleja la luz de las lámparas, creando un resplandor fantasmal, mientras sus aguas filtradas alimentan las constantes lluvias que caen sobre la capital.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón de regreso -->
+    <label for="show-main" class="back-button" title="Volver al mapa">🗺️</label>
