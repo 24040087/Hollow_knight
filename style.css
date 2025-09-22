@@ -1,4 +1,81 @@
+        .home-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(45deg, #d29034, #ff8c00);
+        color: #1a1a1a;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(210, 144, 52, 0.3);
+        }
+
+        .home-button:hover {
+            background: linear-gradient(45deg, #ff8c00, #d29034);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(210, 144, 52, 0.5);
+        }
+
+        .home-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Tooltip opcional */
+        .home-button::after {
+            content: 'Inicio';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .home-button:hover::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .home-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                top: 15px;
+                right: 15px;
+            }
+        }
+
         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2c1810 0%, #3d2817 25%, #4a3525 50%, #2c1810 100%);
+            color: #f4e4d3;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -371,4 +448,5 @@
             .content-grid { grid-template-columns: 1fr; }
             .back-button { width: 55px; height: 55px; font-size: 1.3rem; }
             .mystery-navigation { padding: 50px 30px; }
+
         }
