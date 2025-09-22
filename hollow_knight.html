@@ -6,6 +6,69 @@
     <title>Hollow Knight - El Mundo de Hallownest</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        .home-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #d29034, #ff8c00);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(210, 144, 52, 0.3);
+        }
+
+        .home-button:hover {
+            background: linear-gradient(45deg, #ff8c00, #d29034);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(210, 144, 52, 0.5);
+        }
+
+        .home-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Tooltip opcional */
+        .home-button::after {
+            content: 'Inicio';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .home-button:hover::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .home-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                top: 15px;
+                right: 15px;
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -464,6 +527,8 @@
 </head>
 <body>
     <div class="bg-particles"></div>
+
+    <a href="index.html" class="home-button" title="Volver al inicio"><img src="imagenes/extras/flecha_atras.png" width="30" height="30"></a>
     
     <!-- Inputs para controlar navegación -->
     <input type="radio" name="section" id="show-main" class="navigation-input" checked>
@@ -476,7 +541,7 @@
     <div class="main-screen">
         <header class="hollow-knight-header">
             <div class="container">
-                <h1 class="main-title"><a href="index.html">HALLOWNEST</a></h1>
+                <h1 class="main-title">HALLOWNEST</h1>
                 <p class="subtitle">Reino de Sombras y Secretos</p>
                 <p class="description">
                     Adentraos en las profundidades del reino caído, donde cada rincón guarda una historia, 
@@ -1078,5 +1143,4 @@
     </div>
 
     <!-- Botón de regreso -->
-
     <label for="show-main" class="back-button" title="Volver al mapa">🗺️</label>
